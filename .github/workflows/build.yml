@@ -1,0 +1,33 @@
+name: Build event aggregator
+
+on:
+  schedule:
+    - cron: '0 6 * * *'   # every day at 06:00 UTC
+  workflow_dispatch:        # lets you run it manually from the phone
+
+permissions:
+  contents: write           # allows the job to commit the updated page
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build the page
+        run: python scraper.py
+
+      - name: Commit the updated page
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html data/events.json
+          git commit -m "Update events $(date -u +%Y-%m-%d)" || echo "Nothing changed"
+          git push 
