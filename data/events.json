@@ -1,0 +1,110 @@
+{
+  "https://biorn.org/news-events/events/f-a-z-konferenz-15-jahrestagung-house-of-pharma-healthcare/": {
+    "title": "F.A.Z. Konferenz 15. Jahrestagung House of Pharma & Healthcare",
+    "source": "BioRN",
+    "date_iso": "2026-09-01",
+    "first_seen": "2026-08-01"
+  },
+  "https://biorn.org/news-events/events/biotechgate-digital-partnering-august-2026/": {
+    "title": "Biotechgate Digital Partnering August 2026",
+    "source": "BioRN",
+    "date_iso": "2026-09-04",
+    "first_seen": "2026-08-01"
+  },
+  "https://biorn.org/news-events/events/nordic-life-science-days-2026/": {
+    "title": "Nordic Life Science Days 2026",
+    "source": "BioRN",
+    "date_iso": "2026-09-09",
+    "first_seen": "2026-08-01"
+  },
+  "https://biorn.org/news-events/events/lab-automation-community-meetup-biolabs-heidelberg/": {
+    "title": "Lab Automation Community Meetup: BioLabs Heidelberg",
+    "source": "BioRN",
+    "date_iso": "2026-09-10",
+    "first_seen": "2026-08-01"
+  },
+  "https://biorn.org/news-events/events/k-biotech-innovation-day-with-biorn-life-science-cluster/": {
+    "title": "K-Biotech Innovation Day with bioRN Life Science Cluster",
+    "source": "BioRN",
+    "date_iso": "2026-09-17",
+    "first_seen": "2026-08-01"
+  },
+  "https://biorn.org/news-events/events/translationaler-protein-biomarker-workshop/": {
+    "title": "Translationaler Protein-Biomarker-Workshop",
+    "source": "BioRN",
+    "date_iso": "2026-09-18",
+    "first_seen": "2026-08-01"
+  },
+  "https://biorn.org/news-events/events/biorn-lounge-intraseq-technology-a-multimodal-single-cell-method-for-simultaneous-measurement-of-rna-and-proteins-to-uncover-new-single-cell-biology/": {
+    "title": "InTraSeq technology: a multimodal single cell method for simultaneous measurement of RNA and Proteins to uncover new single cell biology",
+    "source": "BioRN",
+    "date_iso": "2026-09-29",
+    "first_seen": "2026-08-01"
+  },
+  "https://biorn.org/news-events/events/biospain-2026/": {
+    "title": "BIOSPAIN 2026",
+    "source": "BioRN",
+    "date_iso": "2026-10-01",
+    "first_seen": "2026-08-01"
+  },
+  "https://biorn.org/news-events/events/wittenstein-biointelligence-award/": {
+    "title": "Wittenstein Biointelligence Award",
+    "source": "BioRN",
+    "date_iso": "2026-10-06",
+    "first_seen": "2026-08-01"
+  },
+  "https://biorn.org/news-events/events/embl-imaging-centre-symposium/": {
+    "title": "EMBL Imaging Centre Symposium",
+    "source": "BioRN",
+    "date_iso": "2026-10-14",
+    "first_seen": "2026-08-01"
+  },
+  "https://biorn.org/news-events/events/festival-of-biologics-2026/": {
+    "title": "Festival of Biologics 2026",
+    "source": "BioRN",
+    "date_iso": "2026-10-15",
+    "first_seen": "2026-08-01"
+  },
+  "https://biorn.org/news-events/events/biorn-marcom-breakfast-targeted-communication/": {
+    "title": "bioRN MarCom SUMMIT: TARGETED COMMUNICATION",
+    "source": "BioRN",
+    "date_iso": "2025-10-22",
+    "first_seen": "2026-08-01"
+  },
+  "https://biorn.org/news-events/events/industry-impact-conference/": {
+    "title": "Industry Impact Conference",
+    "source": "BioRN",
+    "date_iso": "2026-10-29",
+    "first_seen": "2026-08-01"
+  },
+  "https://biorn.org/news-events/events/bio-europe-spring/": {
+    "title": "Bio-Europe 2026",
+    "source": "BioRN",
+    "date_iso": "2026-11-11",
+    "first_seen": "2026-08-01"
+  },
+  "https://biorn.org/news-events/events/biofit-and-medfit-2026/": {
+    "title": "BioFIT and MedFIT 2026",
+    "source": "BioRN",
+    "date_iso": "2026-12-11",
+    "first_seen": "2026-08-01"
+  },
+  "https://biorn.org/news-events/events/curious-future-insight-conference-2027/": {
+    "title": "Curious – Future Insight Conference 2027",
+    "source": "BioRN",
+    "date_iso": "2027-07-08",
+    "first_seen": "2026-08-01"
+  },
+  "https://www.uni-heidelberg.de/de/veranstaltungen/entrepreneurial-skills-modules-what-is-it-and-what-do-i-get-out-of-it-2026-10-01": {
+    "title": "Entrepreneurial Skills Modules – What is it and what do I get out of it? Online",
+    "source": "hei_INNOVATION",
+    "date_iso": "2026-10-01",
+    "first_seen": "2026-08-01"
+  },
+  "https://www.uni-heidelberg.de/en/veranstaltungen/female-founders-brunch-jade-robinson-2026-10-16": {
+    "title": "Female Founders Brunch: Jade Robinson Jade Robinson, Co-Founder of Linq Photonics hei_INNOVATION Startup Hub, Tiergartenstr. 15, 69121 Heidelberg",
+    "source": "hei_INNOVATION",
+    "date_iso": "2026-10-16",
+    "first_seen": "2026-08-01"
+  }
+}
