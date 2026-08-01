@@ -16,7 +16,7 @@
   .filters button { border: 1px solid #d1d5db; background: #fff; color: #16181d;
          padding: 7px 13px; border-radius: 999px; font-size: .85rem; cursor: pointer; }
   .filters button.active { background: #16181d; color: #fff; border-color: #16181d; }
-  ul { list-style: none; margin: 0; padding: 10px 14px 40px; }
+  ul { list-style: none; margin: 0; padding: 10px 14px 8px; }
   .card { background: #fff; border: 1px solid #e5e7eb; border-radius: 14px;
          padding: 14px 15px; margin: 10px 0; }
   .date { font-size: .78rem; color: #6b7280; margin-bottom: 4px; }
@@ -26,24 +26,29 @@
   .tag { color: #fff; font-size: .72rem; padding: 3px 9px; border-radius: 999px; }
   .new { font-size: .68rem; font-weight: 700; color: #b45309;
          background: #fef3c7; padding: 3px 8px; border-radius: 999px; }
+  .also { padding: 6px 18px 40px; }
+  .also h2 { font-size: .95rem; margin: 14px 0 4px; }
+  .also p { color: #6b7280; font-size: .78rem; margin: 0 0 10px; }
+  .xlink { display: block; background: #fff; border: 1px solid #e5e7eb;
+         border-radius: 12px; padding: 12px 14px; margin: 8px 0; color: #0b57d0;
+         text-decoration: none; font-size: .92rem; font-weight: 500; }
   @media (prefers-color-scheme: dark) {
     body { background: #0f1115; color: #e5e7eb; }
-    .card { background: #181b22; border-color: #262a33; }
+    .card, .xlink { background: #181b22; border-color: #262a33; }
     .filters button { background: #181b22; color: #e5e7eb; border-color: #333; }
     .filters button.active { background: #e5e7eb; color: #0f1115; }
-    .title { color: #7cb0ff; }
+    .title, .xlink { color: #7cb0ff; }
   }
 </style>
 </head>
 <body>
   <header>
     <h1>Heidelberg Startup Events</h1>
-    <div class="sub">BioRN &amp; hei_INNOVATION &middot; 17 upcoming &middot; updated 01 Aug 2026, 07:57 UTC</div>
+    <div class="sub">22 upcoming &middot; updated 01 Aug 2026, 15:34 UTC</div>
   </header>
   <div class="filters">
     <button class="active" onclick="flt(this,'all')">All</button>
-    <button onclick="flt(this,'BioRN')">BioRN</button>
-    <button onclick="flt(this,'hei_INNOVATION')">hei_INNOVATION</button>
+    <button onclick="flt(this,'BioRN')">BioRN</button><button onclick="flt(this,'hei_INNOVATION')">hei_INNOVATION</button><button onclick="flt(this,'Technologiepark')">Technologiepark</button>
   </div>
   <ul id="list">
       <li class="card" data-source="BioRN">
@@ -82,10 +87,34 @@
         <div class="meta"><span class="tag" style="background:#0a7d5a">BioRN</span><span class="new">NEW</span></div>
       </li>
 
+      <li class="card" data-source="Technologiepark">
+        <div class="date">18 Sep 2026</div>
+        <a class="title" href="https://www.technologiepark-heidelberg.de/aktuelles/life-science-accelerator/" target="_blank" rel="noopener">Life Science Accelerator</a>
+        <div class="meta"><span class="tag" style="background:#004a77">Technologiepark</span><span class="new">NEW</span></div>
+      </li>
+
+      <li class="card" data-source="Technologiepark">
+        <div class="date">24 Sep 2026</div>
+        <a class="title" href="https://www.technologiepark-heidelberg.de/aktuelles/life-science-investors-day-2026/" target="_blank" rel="noopener">Life Science Investors’ Day 2026</a>
+        <div class="meta"><span class="tag" style="background:#004a77">Technologiepark</span><span class="new">NEW</span></div>
+      </li>
+
       <li class="card" data-source="BioRN">
         <div class="date">29 Sep 2026</div>
         <a class="title" href="https://biorn.org/news-events/events/biorn-lounge-intraseq-technology-a-multimodal-single-cell-method-for-simultaneous-measurement-of-rna-and-proteins-to-uncover-new-single-cell-biology/" target="_blank" rel="noopener">InTraSeq technology: a multimodal single cell method for simultaneous measurement of RNA and Proteins to uncover new single cell biology</a>
         <div class="meta"><span class="tag" style="background:#0a7d5a">BioRN</span><span class="new">NEW</span></div>
+      </li>
+
+      <li class="card" data-source="Technologiepark">
+        <div class="date">30 Sep 2026</div>
+        <a class="title" href="https://www.technologiepark-heidelberg.de/aktuelles/up2bbq/" target="_blank" rel="noopener">Up2BBQ</a>
+        <div class="meta"><span class="tag" style="background:#004a77">Technologiepark</span><span class="new">NEW</span></div>
+      </li>
+
+      <li class="card" data-source="Technologiepark">
+        <div class="date">30 Sep 2026</div>
+        <a class="title" href="https://www.technologiepark-heidelberg.de/aktuelles/female-founders-cup/" target="_blank" rel="noopener">Female Founders Cup</a>
+        <div class="meta"><span class="tag" style="background:#004a77">Technologiepark</span><span class="new">NEW</span></div>
       </li>
 
       <li class="card" data-source="BioRN">
@@ -104,6 +133,12 @@
         <div class="date">6 Oct 2026</div>
         <a class="title" href="https://biorn.org/news-events/events/wittenstein-biointelligence-award/" target="_blank" rel="noopener">Wittenstein Biointelligence Award</a>
         <div class="meta"><span class="tag" style="background:#0a7d5a">BioRN</span><span class="new">NEW</span></div>
+      </li>
+
+      <li class="card" data-source="Technologiepark">
+        <div class="date">8 Oct 2026</div>
+        <a class="title" href="https://www.technologiepark-heidelberg.de/aktuelles/startup-world-cup-heidelberg-vorentscheid/" target="_blank" rel="noopener">Startup World Cup Heidelberg Vorentscheid</a>
+        <div class="meta"><span class="tag" style="background:#004a77">Technologiepark</span><span class="new">NEW</span></div>
       </li>
 
       <li class="card" data-source="BioRN">
@@ -148,6 +183,11 @@
         <div class="meta"><span class="tag" style="background:#0a7d5a">BioRN</span><span class="new">NEW</span></div>
       </li>
   </ul>
+  <div class="also">
+    <h2>Also check (can't be auto-pulled)</h2>
+    <p>These block scrapers or need JavaScript, so tap through to their pages.</p>
+    <a class="xlink" href="https://www.eventbrite.com/o/heidelberg-startup-partners-ev-9766883937" target="_blank" rel="noopener">Heidelberg Startup Partners (Eventbrite)</a><a class="xlink" href="https://www.hip-heidelberg.com/en/" target="_blank" rel="noopener">Heidelberg Innovation Park (hip)</a><a class="xlink" href="https://www.up2b.io/" target="_blank" rel="noopener">Up2B Accelerator</a><a class="xlink" href="https://www.lifescience-bw.de/" target="_blank" rel="noopener">Life Science Accelerator BW</a><a class="xlink" href="https://www.ki-garage.de/de/" target="_blank" rel="noopener">KI Garage</a><a class="xlink" href="https://www.google.com/search?q=DeepTechHub+events+Heidelberg" target="_blank" rel="noopener">DeepTechHub (search)</a><a class="xlink" href="https://www.google.com/search?q=eventbrite+Heidelberg+startup+tech+events" target="_blank" rel="noopener">Eventbrite Heidelberg (search)</a><a class="xlink" href="https://www.google.com/search?q=meetup+Heidelberg+tech+startup" target="_blank" rel="noopener">Meetup Heidelberg (search)</a>
+  </div>
 <script>
   function flt(btn, src) {
     document.querySelectorAll('.filters button').forEach(function(b){b.classList.remove('active');});

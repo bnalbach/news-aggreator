@@ -106,5 +106,35 @@
     "source": "hei_INNOVATION",
     "date_iso": "2026-10-16",
     "first_seen": "2026-08-01"
+  },
+  "https://www.technologiepark-heidelberg.de/aktuelles/startup-world-cup-heidelberg-vorentscheid/": {
+    "title": "Startup World Cup Heidelberg Vorentscheid",
+    "source": "Technologiepark",
+    "date_iso": "2026-10-08",
+    "first_seen": "2026-08-01"
+  },
+  "https://www.technologiepark-heidelberg.de/aktuelles/up2bbq/": {
+    "title": "Up2BBQ",
+    "source": "Technologiepark",
+    "date_iso": "2026-09-30",
+    "first_seen": "2026-08-01"
+  },
+  "https://www.technologiepark-heidelberg.de/aktuelles/female-founders-cup/": {
+    "title": "Female Founders Cup",
+    "source": "Technologiepark",
+    "date_iso": "2026-09-30",
+    "first_seen": "2026-08-01"
+  },
+  "https://www.technologiepark-heidelberg.de/aktuelles/life-science-investors-day-2026/": {
+    "title": "Life Science Investors’ Day 2026",
+    "source": "Technologiepark",
+    "date_iso": "2026-09-24",
+    "first_seen": "2026-08-01"
+  },
+  "https://www.technologiepark-heidelberg.de/aktuelles/life-science-accelerator/": {
+    "title": "Life Science Accelerator",
+    "source": "Technologiepark",
+    "date_iso": "2026-09-18",
+    "first_seen": "2026-08-01"
   }
 }
