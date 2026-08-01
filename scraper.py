@@ -1,11 +1,15 @@
 """
 Heidelberg startup-events aggregator.
 
-Fetches upcoming events from BioRN and hei_INNOVATION, then writes a single
+Auto-collects upcoming events from three server-rendered sources
+(BioRN, hei_INNOVATION, Technologiepark Heidelberg) and builds a single
 mobile-friendly index.html plus data/events.json (used to flag NEW events).
 
-Designed to run daily in GitHub Actions. It never crashes on a single bad
-source: if one site fails, the others still build.
+Sources that block bots or are JavaScript-only (hip, Eventbrite, Meetup, ...)
+can't be scraped politely, so they appear as one-tap links in an
+"Also check" section instead. Add or remove sources in SOURCES / ALSO_CHECK.
+
+Runs daily in GitHub Actions. One bad source never breaks the build.
 """
 
 import json
@@ -19,21 +23,39 @@ from urllib.parse import urljoin
 import requests
 from bs4 import BeautifulSoup
 
-# --- config -----------------------------------------------------------------
+# --- sources that get scraped ----------------------------------------------
 
-SOURCES = {
-    "BioRN": "https://biorn.org/news-events/events/",
-    "hei_INNOVATION": "https://www.uni-heidelberg.de/en/transfer/heiinnovation/events",
-}
+SOURCES = [
+    {"name": "BioRN", "color": "#0a7d5a", "parser": "biorn",
+     "url": "https://biorn.org/news-events/events/"},
+    {"name": "hei_INNOVATION", "color": "#b3282d", "parser": "hei",
+     "url": "https://www.uni-heidelberg.de/en/transfer/heiinnovation/events"},
+    {"name": "Technologiepark", "color": "#004a77", "parser": "tphd",
+     "url": "https://www.technologiepark-heidelberg.de/aktuelles/events/"},
+]
 
-# BioRN sub-pages that live under /news-events/events/ but are NOT single events
+# sources we can't scrape politely -> shown as tap-through links on the page
+ALSO_CHECK = [
+    ("Heidelberg Startup Partners (Eventbrite)",
+     "https://www.eventbrite.com/o/heidelberg-startup-partners-ev-9766883937"),
+    ("Heidelberg Innovation Park (hip)", "https://www.hip-heidelberg.com/en/"),
+    ("Up2B Accelerator", "https://www.up2b.io/"),
+    ("Life Science Accelerator BW", "https://www.lifescience-bw.de/"),
+    ("KI Garage", "https://www.ki-garage.de/de/"),
+    ("DeepTechHub (search)",
+     "https://www.google.com/search?q=DeepTechHub+events+Heidelberg"),
+    ("Eventbrite Heidelberg (search)",
+     "https://www.google.com/search?q=eventbrite+Heidelberg+startup+tech+events"),
+    ("Meetup Heidelberg (search)",
+     "https://www.google.com/search?q=meetup+Heidelberg+tech+startup"),
+]
+
 BIORN_EXCLUDE = {
-    "life-the-biomedical-convention-2026",
-    "life-the-biomedical-convention-2027",
-    "smartlabs-summit-2025",
-    "bac-life-science-week",
-    "presse-news",
+    "life-the-biomedical-convention-2026", "life-the-biomedical-convention-2027",
+    "smartlabs-summit-2025", "bac-life-science-week", "presse-news",
 }
+# section pages on Technologiepark that live under /aktuelles/ but aren't events
+TPHD_EXCLUDE = {"news", "events", "presse", "pressekit", "found"}
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (compatible; HD-Events-Aggregator/1.0; personal use)"
@@ -42,7 +64,6 @@ HEADERS = {
 DATA_FILE = Path("data/events.json")
 OUT_FILE = Path("index.html")
 TODAY = date.today()
-
 MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
           "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
@@ -60,7 +81,6 @@ def slug_to_title(slug):
 
 
 def fmt_iso(iso):
-    """'2026-10-16' -> '16 Oct 2026'."""
     try:
         d = datetime.strptime(iso, "%Y-%m-%d").date()
         return f"{d.day} {MONTHS[d.month - 1]} {d.year}"
@@ -68,13 +88,23 @@ def fmt_iso(iso):
         return iso
 
 
+def date_from_ddmmyyyy(text):
+    m = re.search(r"(\d{1,2})\.(\d{1,2})\.(\d{4})", text)
+    if not m:
+        return ""
+    dd, mm, yy = (int(x) for x in m.groups())
+    try:
+        return date(yy, mm, dd).isoformat()
+    except ValueError:
+        return ""
+
+
 # --- parsers ----------------------------------------------------------------
 
-def parse_heiinnovation(html, base):
-    """hei_INNOVATION event links end in an ISO date, which we read directly."""
+def parse_hei(html, base):
+    """hei_INNOVATION event links end in an ISO date, read directly."""
     soup = BeautifulSoup(html, "html.parser")
-    events = []
-    seen = set()
+    events, seen = [], set()
     for a in soup.find_all("a", href=True):
         href = a["href"]
         if "/veranstaltungen/" not in href:
@@ -88,25 +118,20 @@ def parse_heiinnovation(html, base):
         seen.add(url)
         iso = m.group(1)
         text = a.get_text(" ", strip=True)
-        # strip a leading time range like "1:00 PM - 1:30 PM"
-        text = re.sub(r"^\d{1,2}:\d{2}\s*[AP]M\s*-\s*\d{1,2}:\d{2}\s*[AP]M\s*",
-                      "", text)
+        text = re.sub(r"^\d{1,2}:\d{2}\s*[AP]M\s*-\s*\d{1,2}:\d{2}\s*[AP]M\s*", "", text)
         text = re.sub(r"\s*-\s*$", "", text).strip(" -\u2013")
         if not text:
             text = slug_to_title(re.sub(r"-\d{4}-\d{2}-\d{2}/?$", "",
                                         href.rstrip("/").split("/")[-1]))
-        events.append({
-            "title": text, "url": url, "source": "hei_INNOVATION",
-            "date_iso": iso, "date_text": fmt_iso(iso),
-        })
+        events.append({"title": text, "url": url, "source": "hei_INNOVATION",
+                       "date_iso": iso, "date_text": fmt_iso(iso)})
     return events
 
 
 def parse_biorn(html, base):
     """BioRN 'read more' links point to /news-events/events/<slug>/."""
     soup = BeautifulSoup(html, "html.parser")
-    events = []
-    seen = set()
+    events, seen = [], set()
     for a in soup.find_all("a", href=True):
         href = a["href"]
         if "/news-events/events/" not in href or "#" in href:
@@ -118,51 +143,66 @@ def parse_biorn(html, base):
         if url in seen:
             continue
         seen.add(url)
-
-        # title: nearest preceding heading; fall back to the slug
         title = None
         h = a.find_previous(["h5", "h4", "h3", "h2"])
         if h:
             t = h.get_text(" ", strip=True)
-            if t and t.lower() not in ("read more",) and len(t) > 4:
+            if t and t.lower() != "read more" and len(t) > 4:
                 title = t
         if not title:
             title = slug_to_title(slug)
-
-        # best-effort date from the nearest heading that contains dd.mm.yyyy
-        date_iso, date_text = "", ""
+        date_iso = ""
         for hd in a.find_all_previous(["h4", "h5", "h6", "h3"]):
-            dm = re.search(r"(\d{1,2})\.(\d{1,2})\.(\d{4})", hd.get_text())
-            if dm:
-                dd, mm, yy = (int(x) for x in dm.groups())
-                try:
-                    date_iso = date(yy, mm, dd).isoformat()
-                    date_text = fmt_iso(date_iso)
-                except ValueError:
-                    pass
+            date_iso = date_from_ddmmyyyy(hd.get_text())
+            if date_iso:
                 break
-        events.append({
-            "title": title, "url": url, "source": "BioRN",
-            "date_iso": date_iso, "date_text": date_text or "See details",
-        })
+        events.append({"title": title, "url": url, "source": "BioRN",
+                       "date_iso": date_iso,
+                       "date_text": fmt_iso(date_iso) if date_iso else "See details"})
     return events
 
 
-PARSERS = {"BioRN": parse_biorn, "hei_INNOVATION": parse_heiinnovation}
+def parse_tphd(html, base):
+    """Technologiepark events link to /aktuelles/<slug>/ with a clean title=attr."""
+    soup = BeautifulSoup(html, "html.parser")
+    events, seen = [], set()
+    for a in soup.find_all("a", href=True):
+        href = a["href"]
+        if "/aktuelles/" not in href or "#" in href:
+            continue
+        slug = href.split("/aktuelles/")[-1].strip("/")
+        if not slug or "/" in slug or slug in TPHD_EXCLUDE:
+            continue
+        url = urljoin(base, href)
+        if url in seen:
+            continue
+        seen.add(url)
+        title = (a.get("title") or "").strip()
+        title = re.sub(r"^News:\s*", "", title)
+        if not title or len(title) < 4:
+            title = slug_to_title(slug)
+        date_iso = date_from_ddmmyyyy(a.get_text(" ", strip=True))
+        events.append({"title": title, "url": url, "source": "Technologiepark",
+                       "date_iso": date_iso,
+                       "date_text": fmt_iso(date_iso) if date_iso else "See details"})
+    return events
+
+
+PARSERS = {"biorn": parse_biorn, "hei": parse_hei, "tphd": parse_tphd}
 
 
 # --- build ------------------------------------------------------------------
 
 def collect():
     all_events = []
-    for name, url in SOURCES.items():
+    for src in SOURCES:
         try:
-            html = fetch(url)
-            found = PARSERS[name](html, url)
-            print(f"{name}: {len(found)} events")
+            html = fetch(src["url"])
+            found = PARSERS[src["parser"]](html, src["url"])
+            print(f"{src['name']}: {len(found)} events")
             all_events.extend(found)
-        except Exception as e:                       # never let one source kill the run
-            print(f"WARNING: {name} failed: {e}", file=sys.stderr)
+        except Exception as e:
+            print(f"WARNING: {src['name']} failed: {e}", file=sys.stderr)
     return all_events
 
 
@@ -186,19 +226,18 @@ def apply_first_seen(events):
 
 
 def upcoming_sorted(events):
-    out = []
-    for ev in events:
-        if ev["date_iso"] and ev["date_iso"] < TODAY.isoformat():
-            continue                                 # drop clearly past events
-        out.append(ev)
-    # dated events first (ascending), undated after
+    out = [e for e in events
+           if not (e["date_iso"] and e["date_iso"] < TODAY.isoformat())]
     out.sort(key=lambda e: (e["date_iso"] == "", e["date_iso"]))
     return out
 
 
 def render(events):
     updated = datetime.now(timezone.utc).strftime("%d %b %Y, %H:%M UTC")
-    colors = {"BioRN": "#0a7d5a", "hei_INNOVATION": "#b3282d"}
+    colors = {s["name"]: s["color"] for s in SOURCES}
+    filters = "".join(
+        f'<button onclick="flt(this,\'{escape(s["name"])}\')">{escape(s["name"])}</button>'
+        for s in SOURCES)
     rows = []
     for ev in events:
         c = colors.get(ev["source"], "#555")
@@ -210,6 +249,9 @@ def render(events):
         <div class="meta"><span class="tag" style="background:{c}">{escape(ev['source'])}</span>{new}</div>
       </li>""")
     items = "\n".join(rows) or '<li class="card"><div class="title">No upcoming events found right now.</div></li>'
+    links = "".join(
+        f'<a class="xlink" href="{escape(u)}" target="_blank" rel="noopener">{escape(n)}</a>'
+        for n, u in ALSO_CHECK)
 
     return f"""<!doctype html>
 <html lang="en">
@@ -229,7 +271,7 @@ def render(events):
   .filters button {{ border: 1px solid #d1d5db; background: #fff; color: #16181d;
          padding: 7px 13px; border-radius: 999px; font-size: .85rem; cursor: pointer; }}
   .filters button.active {{ background: #16181d; color: #fff; border-color: #16181d; }}
-  ul {{ list-style: none; margin: 0; padding: 10px 14px 40px; }}
+  ul {{ list-style: none; margin: 0; padding: 10px 14px 8px; }}
   .card {{ background: #fff; border: 1px solid #e5e7eb; border-radius: 14px;
          padding: 14px 15px; margin: 10px 0; }}
   .date {{ font-size: .78rem; color: #6b7280; margin-bottom: 4px; }}
@@ -239,27 +281,37 @@ def render(events):
   .tag {{ color: #fff; font-size: .72rem; padding: 3px 9px; border-radius: 999px; }}
   .new {{ font-size: .68rem; font-weight: 700; color: #b45309;
          background: #fef3c7; padding: 3px 8px; border-radius: 999px; }}
+  .also {{ padding: 6px 18px 40px; }}
+  .also h2 {{ font-size: .95rem; margin: 14px 0 4px; }}
+  .also p {{ color: #6b7280; font-size: .78rem; margin: 0 0 10px; }}
+  .xlink {{ display: block; background: #fff; border: 1px solid #e5e7eb;
+         border-radius: 12px; padding: 12px 14px; margin: 8px 0; color: #0b57d0;
+         text-decoration: none; font-size: .92rem; font-weight: 500; }}
   @media (prefers-color-scheme: dark) {{
     body {{ background: #0f1115; color: #e5e7eb; }}
-    .card {{ background: #181b22; border-color: #262a33; }}
+    .card, .xlink {{ background: #181b22; border-color: #262a33; }}
     .filters button {{ background: #181b22; color: #e5e7eb; border-color: #333; }}
     .filters button.active {{ background: #e5e7eb; color: #0f1115; }}
-    .title {{ color: #7cb0ff; }}
+    .title, .xlink {{ color: #7cb0ff; }}
   }}
 </style>
 </head>
 <body>
   <header>
     <h1>Heidelberg Startup Events</h1>
-    <div class="sub">BioRN &amp; hei_INNOVATION &middot; {len(events)} upcoming &middot; updated {updated}</div>
+    <div class="sub">{len(events)} upcoming &middot; updated {updated}</div>
   </header>
   <div class="filters">
     <button class="active" onclick="flt(this,'all')">All</button>
-    <button onclick="flt(this,'BioRN')">BioRN</button>
-    <button onclick="flt(this,'hei_INNOVATION')">hei_INNOVATION</button>
+    {filters}
   </div>
   <ul id="list">{items}
   </ul>
+  <div class="also">
+    <h2>Also check (can't be auto-pulled)</h2>
+    <p>These block scrapers or need JavaScript, so tap through to their pages.</p>
+    {links}
+  </div>
 <script>
   function flt(btn, src) {{
     document.querySelectorAll('.filters button').forEach(function(b){{b.classList.remove('active');}});
