@@ -172,5 +172,17 @@
     "source": "Technologiepark",
     "date_iso": "2026-09-17",
     "first_seen": "2026-08-21"
+  },
+  "https://biorn.org/news-events/events/biorn-m2m-member-to-member-featuring-nmi-natural-and-medical-sciences-institute-at-the-university-of-tubingen-in-reutlingen/": {
+    "title": "bioRN M2M Member to Member featuring NMI Natural and Medical Sciences Institute at the University of Tübingen in Reutlingen",
+    "source": "BioRN",
+    "date_iso": "2026-10-07",
+    "first_seen": "2026-08-22"
+  },
+  "https://biorn.org/news-events/events/biorn-c-level-circle-the-talent-advantage-hosted-by-progen/": {
+    "title": "bioRN C-Level Circle: The Talent Advantage – hosted by PROGEN",
+    "source": "BioRN",
+    "date_iso": "2026-10-08",
+    "first_seen": "2026-08-22"
   }
 }
