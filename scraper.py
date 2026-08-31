@@ -58,7 +58,7 @@ BIORN_EXCLUDE = {
 TPHD_EXCLUDE = {"news", "events", "presse", "pressekit", "found"}
 
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (compatible; HD-Events-Aggregator/1.0; personal use)"
+    "User-Agent": "HD-Events-Aggregator/1.0 (personal project)"
 }
 
 DATA_FILE = Path("data/events.json")
