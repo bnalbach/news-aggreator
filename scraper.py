@@ -383,10 +383,10 @@ def render(events):
         c = colors.get(ev["source"], "#555")
         new = '<span class="new">NEW</span>' if ev.get("is_new") else ""
         rows.append(f"""
-      <li class="card" data-source="{escape(ev['source'])}">
+      <li class="card" data-id="{escape(ev['url'])}" data-source="{escape(ev['source'])}">
         <div class="date">{escape(ev['date_text'])}</div>
         <a class="title" href="{escape(ev['url'])}" target="_blank" rel="noopener">{escape(ev['title'])}</a>
-        <div class="meta"><span class="tag" style="background:{c}">{escape(ev['source'])}</span>{new}</div>
+        <div class="meta"><span class="tag" style="background:{c}">{escape(ev['source'])}</span>{new}<span class="going">★ Going</span></div>
       </li>""")
     items = "\n".join(rows) or '<li class="card"><div class="title">No upcoming events found right now.</div></li>'
     links = "".join(
@@ -413,7 +413,11 @@ def render(events):
   .filters button.active {{ background: #16181d; color: #fff; border-color: #16181d; }}
   ul {{ list-style: none; margin: 0; padding: 10px 14px 8px; }}
   .card {{ background: #fff; border: 1px solid #e5e7eb; border-radius: 14px;
-         padding: 14px 15px; margin: 10px 0; }}
+         padding: 14px 15px; margin: 10px 0; cursor: pointer; }}
+  .card.marked {{ background: #e8f1ff; border-color: #9cc2ff; }}
+  .going {{ display: none; font-size: .68rem; font-weight: 700; color: #0a7d5a;
+         background: #d9f2e6; padding: 3px 8px; border-radius: 999px; }}
+  .card.marked .going {{ display: inline-block; }}
   .date {{ font-size: .78rem; color: #6b7280; margin-bottom: 4px; }}
   .title {{ display: block; font-size: 1.02rem; font-weight: 600;
          color: #0b57d0; text-decoration: none; line-height: 1.3; }}
@@ -433,6 +437,8 @@ def render(events):
     .filters button {{ background: #181b22; color: #e5e7eb; border-color: #333; }}
     .filters button.active {{ background: #e5e7eb; color: #0f1115; }}
     .title, .xlink {{ color: #7cb0ff; }}
+    .card.marked {{ background: #1c2c46; border-color: #3b5b8c; }}
+    .going {{ color: #7ee0b0; background: #123024; }}
   }}
 </style>
 </head>
@@ -453,6 +459,30 @@ def render(events):
     {links}
   </div>
 <script>
+  // --- mark events as "Going" (persists per-device in localStorage) ---
+  var MARK_KEY = 'hd_events_marked';
+  function loadMarks() {{
+    try {{ return new Set(JSON.parse(localStorage.getItem(MARK_KEY) || '[]')); }}
+    catch (e) {{ return new Set(); }}
+  }}
+  function saveMarks(set) {{
+    try {{ localStorage.setItem(MARK_KEY, JSON.stringify(Array.from(set))); }}
+    catch (e) {{}}
+  }}
+  var marked = loadMarks();
+  document.querySelectorAll('#list .card').forEach(function(card){{
+    if (card.dataset.id && marked.has(card.dataset.id)) card.classList.add('marked');
+  }});
+  document.getElementById('list').addEventListener('click', function(e){{
+    if (e.target.closest('a')) return;          // let the title link open the event
+    var card = e.target.closest('.card');
+    if (!card || !card.dataset.id) return;
+    var id = card.dataset.id;
+    if (marked.has(id)) {{ marked.delete(id); card.classList.remove('marked'); }}
+    else {{ marked.add(id); card.classList.add('marked'); }}
+    saveMarks(marked);
+  }});
+
   function flt(btn, src) {{
     document.querySelectorAll('.filters button').forEach(function(b){{b.classList.remove('active');}});
     btn.classList.add('active');
