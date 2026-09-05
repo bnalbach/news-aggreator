@@ -58,10 +58,6 @@ ALSO_CHECK = [
     ("KI-Garage - Events", "https://www.ki-garage.de/de/ueber-uns/ki-events"),
     ("DeepTechHub - Events", "https://deep-tech-hub.de/events/"),
     ("Life Science Accelerator BW", "https://www.lifescience-bw.de/"),
-    ("Eventbrite Heidelberg (search)",
-     "https://www.google.com/search?q=eventbrite+Heidelberg+startup+tech+events"),
-    ("Meetup Heidelberg (search)",
-     "https://www.google.com/search?q=meetup+Heidelberg+tech+startup"),
 ]
 
 BIORN_EXCLUDE = {
