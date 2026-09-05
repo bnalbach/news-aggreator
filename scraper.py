@@ -1,12 +1,18 @@
 """
 Heidelberg startup-events aggregator.
 
-Auto-collects upcoming events from three server-rendered sources
-(BioRN, hei_INNOVATION, Technologiepark Heidelberg) and builds a single
-mobile-friendly index.html plus data/events.json (used to flag NEW events).
+Auto-collects upcoming events from five server-rendered sources
+(BioRN, hei_INNOVATION, Technologiepark Heidelberg, H3 Health Hub, Up2B) and
+builds a single mobile-friendly index.html plus data/events.json (used to flag
+NEW events).
 
-Sources that block bots or are JavaScript-only (hip, Eventbrite, Meetup, ...)
-can't be scraped politely, so they appear as one-tap links in an
+H3 Health Hub and Up2B both list events across all of Germany / BW, so their
+parsers keep only events that are near Heidelberg, hybrid, or online (see
+NEAR_HD / ONLINE_KEYWORDS + near_or_online()).
+
+Sources that block bots, are JavaScript-only, or only publish a past-dated news
+feed (hip, KI-Garage, DeepTechHub, Eventbrite, Meetup, ...) can't be turned into
+a clean "upcoming events" list, so they appear as one-tap links in an
 "Also check" section instead. Add or remove sources in SOURCES / ALSO_CHECK.
 
 Runs daily in GitHub Actions. One bad source never breaks the build.
@@ -32,18 +38,26 @@ SOURCES = [
      "url": "https://www.uni-heidelberg.de/en/transfer/heiinnovation/events"},
     {"name": "Technologiepark", "color": "#004a77", "parser": "tphd",
      "url": "https://www.technologiepark-heidelberg.de/aktuelles/events/"},
+    {"name": "H3 Health Hub", "color": "#0d8a8a", "parser": "h3hub",
+     "url": "https://www.helmholtz-h3.de/events"},
+    {"name": "Up2B", "color": "#e06a1b", "parser": "up2b",
+     "url": "https://www.up2b.io/events"},
 ]
 
-# sources we can't scrape politely -> shown as tap-through links on the page
+# sources we can't scrape into a clean upcoming-events list -> tap-through links
+#   - hip:        /news-en/ is a past-dated news feed, not an events calendar
+#   - KI-Garage:  server-rendered, but "Aktuelle Events" is currently empty
+#                 (only past "Eventrückblick" recaps are listed)
+#   - DeepTechHub: events load from a pitchload.net JS embed; the page itself
+#                 server-renders "Keine Ergebnisse"
 ALSO_CHECK = [
     ("Heidelberg Startup Partners (Eventbrite)",
      "https://www.eventbrite.com/o/heidelberg-startup-partners-ev-9766883937"),
-    ("Heidelberg Innovation Park (hip)", "https://www.hip-heidelberg.com/en/"),
-    ("Up2B Accelerator", "https://www.up2b.io/"),
+    ("Heidelberg Innovation Park (hip) - News",
+     "https://www.hip-heidelberg.com/en/news-en/"),
+    ("KI-Garage - Events", "https://www.ki-garage.de/de/ueber-uns/ki-events"),
+    ("DeepTechHub - Events", "https://deep-tech-hub.de/events/"),
     ("Life Science Accelerator BW", "https://www.lifescience-bw.de/"),
-    ("KI Garage", "https://www.ki-garage.de/de/"),
-    ("DeepTechHub (search)",
-     "https://www.google.com/search?q=DeepTechHub+events+Heidelberg"),
     ("Eventbrite Heidelberg (search)",
      "https://www.google.com/search?q=eventbrite+Heidelberg+startup+tech+events"),
     ("Meetup Heidelberg (search)",
@@ -56,6 +70,19 @@ BIORN_EXCLUDE = {
 }
 # section pages on Technologiepark that live under /aktuelles/ but aren't events
 TPHD_EXCLUDE = {"news", "events", "presse", "pressekit", "found"}
+
+# --- location filter (H3 Health Hub + Up2B) --------------------------------
+# Keep events that are online/hybrid, or physically within ~roughly Rhine-Neckar
+# + a few close BW neighbours. Trim NEAR_HD (e.g. drop karlsruhe/heilbronn/
+# pforzheim) for a tighter radius, or add cities as needed.
+ONLINE_KEYWORDS = ("online", "hybrid", "remote", "virtual", "digital",
+                   "webinar", "zoom")
+NEAR_HD = (
+    "heidelberg", "mannheim", "ludwigshafen", "walldorf", "speyer", "weinheim",
+    "schwetzingen", "wiesloch", "eppelheim", "leimen", "sinsheim", "sandhausen",
+    "nussloch", "hockenheim", "dossenheim", "rhein-neckar", "rhine-neckar",
+    "karlsruhe", "heilbronn", "pforzheim", "bruchsal", "bretten",
+)
 
 HEADERS = {
     "User-Agent": "HD-Events-Aggregator/1.0 (personal project)"
@@ -97,6 +124,16 @@ def date_from_ddmmyyyy(text):
         return date(yy, mm, dd).isoformat()
     except ValueError:
         return ""
+
+
+def near_or_online(location):
+    """True if a location string looks online/hybrid or near Heidelberg.
+    Unknown/empty locations are kept (better to show than silently hide)."""
+    if not location:
+        return True
+    t = location.lower()
+    return (any(k in t for k in ONLINE_KEYWORDS)
+            or any(c in t for c in NEAR_HD))
 
 
 # --- parsers ----------------------------------------------------------------
@@ -188,7 +225,110 @@ def parse_tphd(html, base):
     return events
 
 
-PARSERS = {"biorn": parse_biorn, "hei": parse_hei, "tphd": parse_tphd}
+def parse_h3hub(html, base):
+    """H3 Health Hub lists each event as a heading linking to
+    /events/event/<slug>/, immediately followed by its date (dd.mm.yyyy) and a
+    location. We read the text between consecutive event links and keep only
+    events that are near Heidelberg, hybrid, or online."""
+    soup = BeautifulSoup(html, "html.parser")
+    anchors = [a for a in soup.find_all("a", href=True)
+               if "/events/event/" in a["href"]]
+    events, seen = [], set()
+    for idx, a in enumerate(anchors):
+        url = urljoin(base, a["href"])
+        if url in seen:
+            continue
+        seen.add(url)
+        title = (a.get("title") or a.get_text(" ", strip=True)).strip()
+        if not title:
+            title = slug_to_title(a["href"].rstrip("/").split("/")[-1])
+
+        # collect the text after this event link, up to the next event link
+        stop = anchors[idx + 1] if idx + 1 < len(anchors) else None
+        parts = []
+        for el in a.next_elements:
+            if stop is not None and el is stop:
+                break
+            if getattr(el, "name", None) is None:          # NavigableString
+                s = str(el).strip()
+                if s:
+                    parts.append(s)
+        blk = " ".join(parts)
+        blk = blk.replace(title, " ", 1)                   # drop the title echo
+
+        date_iso = date_from_ddmmyyyy(blk)
+        m = re.search(r"\d{1,2}\.\d{1,2}\.\d{4}\s*(.+)", blk)
+        loc = (m.group(1) if m else blk)[:60]
+
+        if not near_or_online(loc):
+            continue
+        events.append({"title": title, "url": url, "source": "H3 Health Hub",
+                       "date_iso": date_iso,
+                       "date_text": fmt_iso(date_iso) if date_iso else "See details"})
+    return events
+
+
+def parse_up2b(html, base):
+    """Up2B (Wix) server-renders its event cards. Each card is a heading
+    followed by a description and emoji-tagged meta lines (📅 date, 📍 location).
+    Group by heading blocks, keep near-Heidelberg / hybrid / online events, and
+    use the card's external 'More info' link as the event URL."""
+    soup = BeautifulSoup(html, "html.parser")
+    heads = soup.find_all(["h2", "h3", "h4", "h5", "h6"])
+    events, seen = [], set()
+    for idx, h in enumerate(heads):
+        title = re.sub(r"^[^\w(]+", "", h.get_text(" ", strip=True)).strip()
+        if len(title) < 6:
+            continue
+
+        stop = heads[idx + 1] if idx + 1 < len(heads) else None
+        texts, hrefs = [], []
+        for el in h.next_elements:
+            if stop is not None and el is stop:
+                break
+            name = getattr(el, "name", None)
+            if name == "a" and el.get("href"):
+                hrefs.append(el["href"])
+            elif name is None:                             # NavigableString
+                s = str(el).strip()
+                if s:
+                    texts.append(s)
+        block = " ".join(texts)
+
+        # only treat blocks that actually look like an event card
+        if "📍" not in block and not re.search(r"\d{1,2}\.\d{1,2}\.\d{4}", block):
+            continue
+
+        # date: prefer the 📅 line, else the first dd.mm.yyyy in the block
+        date_iso = ""
+        mcal = re.search(r"📅[^\d]*(\d{1,2}\.\d{1,2}\.\d{4})", block)
+        if mcal:
+            date_iso = date_from_ddmmyyyy(mcal.group(1))
+        if not date_iso:
+            date_iso = date_from_ddmmyyyy(block)
+
+        # location: the text window after 📍 (used only for the filter)
+        loc_src = block.split("📍", 1)[1][:80] if "📍" in block else block
+        if not near_or_online(loc_src):
+            continue
+
+        # link: first real external "More info" / "Apply" href in the card
+        url = next((hr for hr in hrefs if hr.startswith("http")), "")
+        if not url:
+            slug = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")
+            url = base + "#" + slug
+        if url in seen:
+            continue
+        seen.add(url)
+
+        events.append({"title": title, "url": url, "source": "Up2B",
+                       "date_iso": date_iso,
+                       "date_text": fmt_iso(date_iso) if date_iso else "See details"})
+    return events
+
+
+PARSERS = {"biorn": parse_biorn, "hei": parse_hei, "tphd": parse_tphd,
+           "h3hub": parse_h3hub, "up2b": parse_up2b}
 
 
 # --- build ------------------------------------------------------------------
@@ -309,7 +449,7 @@ def render(events):
   </ul>
   <div class="also">
     <h2>Also check (can't be auto-pulled)</h2>
-    <p>These block scrapers or need JavaScript, so tap through to their pages.</p>
+    <p>These block scrapers, need JavaScript, or only post past news, so tap through to their pages.</p>
     {links}
   </div>
 <script>
