@@ -96,13 +96,13 @@
     "first_seen": "2026-08-01"
   },
   "https://www.uni-heidelberg.de/de/veranstaltungen/entrepreneurial-skills-modules-what-is-it-and-what-do-i-get-out-of-it-2026-10-01": {
-    "title": "13:00 - 13:30 Uhr Entrepreneurial Skills Modules – What is it and what do I get out of it? Online",
+    "title": "Entrepreneurial Skills Modules – What is it and what do I get out of it? Online",
     "source": "hei_INNOVATION",
     "date_iso": "2026-10-01",
     "first_seen": "2026-08-01"
   },
   "https://www.uni-heidelberg.de/en/veranstaltungen/female-founders-brunch-jade-robinson-2026-10-16": {
-    "title": "10:00 - 12:00 Uhr Female Founders Brunch: Jade Robinson Jade Robinson, Co-Founder of Linq Photonics hei_INNOVATION Startup Hub, Tiergartenstr. 15, 69121 Heidelberg",
+    "title": "Female Founders Brunch: Jade Robinson Jade Robinson, Co-Founder of Linq Photonics hei_INNOVATION Startup Hub, Tiergartenstr. 15, 69121 Heidelberg",
     "source": "hei_INNOVATION",
     "date_iso": "2026-10-16",
     "first_seen": "2026-08-01"
@@ -192,19 +192,19 @@
     "first_seen": "2026-08-27"
   },
   "https://www.uni-heidelberg.de/en/veranstaltungen/pitch-deck-workshop-for-female-founders-2026-10-01": {
-    "title": "15:00 - 17:00 Uhr Pitch Deck Workshop for Female Founders Georg Fischer Idea Room, INF 370",
+    "title": "Pitch Deck Workshop for Female Founders Georg Fischer Idea Room, INF 370",
     "source": "hei_INNOVATION",
     "date_iso": "2026-10-01",
     "first_seen": "2026-09-01"
   },
   "https://www.uni-heidelberg.de/en/veranstaltungen/road-to-visibility-using-linkedin-strategically-2026-10-16": {
-    "title": "12:00 - 14:00 Uhr Road to Visibility: Using LinkedIn Strategically Dr. Lenka Kyjacova hei_INNOVATION Startup Hub, Tiergartenstr. 15, 69121 Heidelberg",
+    "title": "Road to Visibility: Using LinkedIn Strategically Dr. Lenka Kyjacova hei_INNOVATION Startup Hub, Tiergartenstr. 15, 69121 Heidelberg",
     "source": "hei_INNOVATION",
     "date_iso": "2026-10-16",
     "first_seen": "2026-09-01"
   },
   "https://www.uni-heidelberg.de/de/veranstaltungen/heiinnovation-lunch-learn-2026-11-11": {
-    "title": "11:00 - 13:00 Uhr hei_INNOVATION Lunch & Learn Idea Room, INF 370",
+    "title": "hei_INNOVATION Lunch & Learn Idea Room, INF 370",
     "source": "hei_INNOVATION",
     "date_iso": "2026-11-11",
     "first_seen": "2026-09-01"
@@ -388,5 +388,65 @@
     "source": "Up2B",
     "date_iso": "2026-09-17",
     "first_seen": "2026-09-08"
+  },
+  "https://www.uni-heidelberg.de/de/veranstaltungen/workshop-bridging-the-gap-von-wissen-zu-wirkung-2026-10-28": {
+    "title": "Workshop: Bridging the Gap – Von Wissen zu Wirkung Idea Room, INF 370",
+    "source": "hei_INNOVATION",
+    "date_iso": "2026-10-28",
+    "first_seen": "2026-09-09"
+  },
+  "https://www.helmholtz-h3.de/events/event/advance-your-financial-intelligence-helmholtz-school-for-innovation-and-entrepreneurship-hesie/": {
+    "title": "Advance Your Financial Intelligence | Helmholtz School for Innovation and Entrepreneurship (HeSIE)",
+    "source": "H3 Health Hub",
+    "date_iso": "2026-09-21",
+    "first_seen": "2026-09-09"
+  },
+  "https://www.helmholtz-h3.de/events/event/financial-intelligence-how-to-value-your-startup-and-raise-capital-helmholtz-school-for-innovation-and-entrepreneurship-hesie/": {
+    "title": "Financial Intelligence: How to Value Your Startup and Raise Capital? | Helmholtz School for Innovation and Entrepreneurship (HeSIE)",
+    "source": "H3 Health Hub",
+    "date_iso": "2026-09-28",
+    "first_seen": "2026-09-09"
+  },
+  "https://www.helmholtz-h3.de/events/event/exi-digital-workshop-gruenden-aus-der-forschung-cyberforum/": {
+    "title": "EXI Digital Workshop: Gründen aus der Forschung | CyberForum",
+    "source": "H3 Health Hub",
+    "date_iso": "2026-09-29",
+    "first_seen": "2026-09-09"
+  },
+  "https://www.helmholtz-h3.de/events/event/fundraising-that-hits-the-brain-helmholtz-school-for-innovation-and-entrepreneurship-hesie/": {
+    "title": "Fundraising That Hits the Brain | Helmholtz School for Innovation and Entrepreneurship (HeSIE)",
+    "source": "H3 Health Hub",
+    "date_iso": "2026-10-21",
+    "first_seen": "2026-09-09"
+  },
+  "https://www.helmholtz-h3.de/events/event/from-idea-to-customer-what-i-learned-along-the-way-10-principles-for-founders-helmholtz-school-for-innovation-and-entrepreneurship-hesie/": {
+    "title": "From idea to customer: What I learned along the way – 10 principles for founders | Helmholtz School for Innovation and Entrepreneurship (HeSIE)",
+    "source": "H3 Health Hub",
+    "date_iso": "2026-10-23",
+    "first_seen": "2026-09-09"
+  },
+  "https://www.helmholtz-h3.de/events/event/academia-the-private-sector-or-entrepreneurship-what-comes-after-the-phd-helmholtz-school-for-innovation-and-entrepreneurship-hesie/": {
+    "title": "Academia, the private sector, or entrepreneurship - what comes after the PhD? | Helmholtz School for Innovation and Entrepreneurship (HeSIE)",
+    "source": "H3 Health Hub",
+    "date_iso": "2026-11-04",
+    "first_seen": "2026-09-09"
+  },
+  "https://www.helmholtz-h3.de/events/event/legal-challenges-in-setting-up-your-start-up-pitfalls-obstacles-and-best-practices-helmholtz-school-for-innovation-and-entrepreneurship-hesie/": {
+    "title": "Legal Challenges in Setting up your Start-up: Pitfalls, Obstacles and Best Practices | Helmholtz School for Innovation and Entrepreneurship (HeSIE)",
+    "source": "H3 Health Hub",
+    "date_iso": "2026-11-11",
+    "first_seen": "2026-09-09"
+  },
+  "https://www.helmholtz-h3.de/events/event/from-findings-to-fit-the-customer-interviews-ai-cant-run-for-you-helmholtz-school-for-innovation-and-entrepreneurship-hesie/": {
+    "title": "From Findings to Fit – the customer interviews AI can't run for you | Helmholtz School for Innovation and Entrepreneurship (HeSIE)",
+    "source": "H3 Health Hub",
+    "date_iso": "2026-11-20",
+    "first_seen": "2026-09-09"
+  },
+  "https://www.helmholtz-h3.de/events/event/market-mastery-helmholtz-school-for-innovation-and-entrepreneurship-hesie/": {
+    "title": "Market Mastery | Helmholtz School for Innovation and Entrepreneurship (HeSIE)",
+    "source": "H3 Health Hub",
+    "date_iso": "2026-12-02",
+    "first_seen": "2026-09-09"
   }
 }
