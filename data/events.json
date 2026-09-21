@@ -466,5 +466,35 @@
     "source": "BioRN",
     "date_iso": "2026-09-29",
     "first_seen": "2026-09-16"
+  },
+  "https://biorn.org/news-events/events/gen-h-webinar-genetic-humanization-by-ozbig-complete-transgenic-replacement-of-any-gene-for-improved-preclinical-translation/": {
+    "title": "Gen-H Webinar: Genetic Humanization by OzBIG: Complete Transgenic Replacement of Any Gene for Improved Preclinical Translation",
+    "source": "BioRN",
+    "date_iso": "2026-09-30",
+    "first_seen": "2026-09-21"
+  },
+  "https://www.helmholtz-h3.de/events/event/from-lab-to-market-what-south-africas-health-system-means-for-your-diagnostic-or-biotech-innovation-start2-group-gmbh-helmholtz-association/": {
+    "title": "From Lab to Market: What South Africa's Health System Means for Your Diagnostic or Biotech Innovation | Start2 Group GmbH & Helmholtz Association",
+    "source": "H3 Health Hub",
+    "date_iso": "2026-09-30",
+    "first_seen": "2026-09-21"
+  },
+  "https://www.helmholtz-h3.de/events/event/pitch-deck-workshop-for-female-founders-hei-innovation/": {
+    "title": "Pitch Deck Workshop for Female Founders | hei_Innovation",
+    "source": "H3 Health Hub",
+    "date_iso": "2026-10-01",
+    "first_seen": "2026-09-21"
+  },
+  "https://www.helmholtz-h3.de/events/event/female-founders-brunch-jade-robinson-hei-innovation/": {
+    "title": "Female Founders Brunch: Jade Robinson | hei_Innovation",
+    "source": "H3 Health Hub",
+    "date_iso": "2026-10-16",
+    "first_seen": "2026-09-21"
+  },
+  "https://www.helmholtz-h3.de/events/event/road-to-visibility-using-linkedin-strategically-hei-innovation/": {
+    "title": "Road to Visibility: Using LinkedIn Strategically | hei_Innovation",
+    "source": "H3 Health Hub",
+    "date_iso": "2026-10-16",
+    "first_seen": "2026-09-21"
   }
 }
