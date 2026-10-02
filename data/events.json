@@ -508,5 +508,11 @@
     "source": "BioRN",
     "date_iso": "2025-10-22",
     "first_seen": "2026-10-01"
+  },
+  "https://www.helmholtz-h3.de/events/event/ai-agents-for-life-science-spin-offs-h3-health-hub-high-intent-labs/": {
+    "title": "AI-Agents for Life-Science Spin-offs | H3 Health Hub & High Intent Labs",
+    "source": "H3 Health Hub",
+    "date_iso": "2026-11-02",
+    "first_seen": "2026-10-02"
   }
 }
