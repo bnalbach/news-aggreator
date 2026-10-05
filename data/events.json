@@ -514,5 +514,11 @@
     "source": "H3 Health Hub",
     "date_iso": "2026-11-02",
     "first_seen": "2026-10-02"
+  },
+  "https://www.uni-heidelberg.de/de/veranstaltungen/heiinnovation-lunch-learn-nicht-erklaeren-anders-zeigen-2026-11-11": {
+    "title": "hei_INNOVATION Lunch & Learn: Nicht erklären. Anders zeigen. Tina Kuka, Koordinatorin SFB 1225 ISOQUANT, Institut für Theoretische Physik, Universität Heidelberg Idea Room, INF 370",
+    "source": "hei_INNOVATION",
+    "date_iso": "2026-11-11",
+    "first_seen": "2026-10-05"
   }
 }
