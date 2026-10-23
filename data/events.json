@@ -68,7 +68,7 @@
   "https://biorn.org/news-events/events/biorn-marcom-breakfast-targeted-communication/": {
     "title": "bioRN MarCom SUMMIT: TARGETED COMMUNICATION",
     "source": "BioRN",
-    "date_iso": "2025-10-22",
+    "date_iso": "2027-07-08",
     "first_seen": "2026-08-01"
   },
   "https://biorn.org/news-events/events/industry-impact-conference/": {
@@ -506,7 +506,7 @@
   "https://biorn.org/news-events/events/aspects-of-spectroscopic-bio-chemical-process-control/": {
     "title": "Aspects of spectroscopic  bio/chemical process control",
     "source": "BioRN",
-    "date_iso": "2025-10-22",
+    "date_iso": "",
     "first_seen": "2026-10-01"
   },
   "https://www.helmholtz-h3.de/events/event/ai-agents-for-life-science-spin-offs-h3-health-hub-high-intent-labs/": {
@@ -520,5 +520,11 @@
     "source": "hei_INNOVATION",
     "date_iso": "2026-11-11",
     "first_seen": "2026-10-05"
+  },
+  "https://biorn.org/news-events/events/start-ups-meet-xtech-von-daten-zu-innovationen-von-modellen-zu-therapien/": {
+    "title": "Start-ups meet xTech – Von Daten zu Innovationen. Von Modellen zu Therapien",
+    "source": "BioRN",
+    "date_iso": "2026-11-02",
+    "first_seen": "2026-10-23"
   }
 }
