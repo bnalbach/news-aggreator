@@ -550,5 +550,23 @@
     "source": "BioRN",
     "date_iso": "2026-11-17",
     "first_seen": "2026-10-29"
+  },
+  "https://biorn.org/news-events/events/5-ht-innovators-club/": {
+    "title": "5-HT Innovators Club",
+    "source": "BioRN",
+    "date_iso": "2026-11-05",
+    "first_seen": "2026-10-30"
+  },
+  "https://biorn.org/news-events/events/webinar-clinical-development-unlocked-a-roadmap-from-research-to-clinical-products-current-insights-on-strategies-costs-and-challenges-from-biorn-members/": {
+    "title": "Webinar: Clinical Development Unlocked – A roadmap from research to clinical products -current insights on strategies, costs and challenges from BioRN members",
+    "source": "BioRN",
+    "date_iso": "2026-11-26",
+    "first_seen": "2026-10-30"
+  },
+  "https://biorn.org/news-events/events/trade-mission-to-indonesia-medtech-registration-deadline/": {
+    "title": "Trade Mission to Indonesia – MedTech | Registration Deadline",
+    "source": "BioRN",
+    "date_iso": "2027-02-01",
+    "first_seen": "2026-10-30"
   }
 }
