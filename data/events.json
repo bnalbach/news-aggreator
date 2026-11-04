@@ -568,5 +568,11 @@
     "source": "BioRN",
     "date_iso": "2027-02-01",
     "first_seen": "2026-10-30"
+  },
+  "https://biorn.org/news-events/events/lunch-learn-with-thermo-fisher-scientific/": {
+    "title": "Lunch & Learn with Thermo Fisher Scientific",
+    "source": "BioRN",
+    "date_iso": "2026-11-24",
+    "first_seen": "2026-11-04"
   }
 }
