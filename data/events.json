@@ -580,5 +580,41 @@
     "source": "H3 Health Hub",
     "date_iso": "2026-12-16",
     "first_seen": "2026-11-07"
+  },
+  "https://www.helmholtz-h3.de/events/event/from-lab-to-life-go-bio-initial-webinar-series-max-planck-innovation/": {
+    "title": "From Lab to Life (GO-Bio initial Webinar Series #1) | Max Planck Innovation",
+    "source": "H3 Health Hub",
+    "date_iso": "2026-11-19",
+    "first_seen": "2026-11-10"
+  },
+  "https://www.helmholtz-h3.de/events/event/protect-your-ip-go-bio-initial-webinar-series-2-max-planck-innovation/": {
+    "title": "Protect Your IP (GO-Bio initial Webinar Series #2) | Max Planck Innovation",
+    "source": "H3 Health Hub",
+    "date_iso": "2026-11-25",
+    "first_seen": "2026-11-10"
+  },
+  "https://www.helmholtz-h3.de/events/event/business-plan-go-bio-initial-webinar-series-3-max-planck-innovation/": {
+    "title": "Business Plan (GO-Bio initial Webinar Series #3) | Max Planck Innovation",
+    "source": "H3 Health Hub",
+    "date_iso": "2026-12-02",
+    "first_seen": "2026-11-10"
+  },
+  "https://www.helmholtz-h3.de/events/event/know-your-market-go-bio-initial-webinar-series-4-max-planck-innovation/": {
+    "title": "Know Your Market (GO-Bio initial Webinar Series #4) | Max Planck Innovation",
+    "source": "H3 Health Hub",
+    "date_iso": "2026-12-03",
+    "first_seen": "2026-11-10"
+  },
+  "https://www.helmholtz-h3.de/events/event/introduction-to-financing-for-start-ups-go-bio-initial-webinar-series-5-max-planck-innovation/": {
+    "title": "Introduction to Financing for Start-ups (GO-Bio initial Webinar Series #5) | Max Planck Innovation",
+    "source": "H3 Health Hub",
+    "date_iso": "2026-12-04",
+    "first_seen": "2026-11-10"
+  },
+  "https://www.helmholtz-h3.de/events/event/pitch-deck-basics-go-bio-initial-webinar-series-6-max-planck-innovation/": {
+    "title": "Pitch Deck Basics (GO-Bio initial Webinar Series #6) | Max Planck Innovation",
+    "source": "H3 Health Hub",
+    "date_iso": "2026-12-07",
+    "first_seen": "2026-11-10"
   }
 }
