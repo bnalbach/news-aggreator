@@ -628,5 +628,11 @@
     "source": "H3 Health Hub",
     "date_iso": "2026-11-17",
     "first_seen": "2026-11-12"
+  },
+  "https://www.uni-heidelberg.de/en/veranstaltungen/founders-meetup-coffee-catalysts-2026-11-25": {
+    "title": "Founders Meetup: Coffee & Catalysts hei_INNOVATION Startup Hub",
+    "source": "hei_INNOVATION",
+    "date_iso": "2026-11-25",
+    "first_seen": "2026-11-16"
   }
 }
