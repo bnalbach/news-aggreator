@@ -640,5 +640,17 @@
     "source": "Technologiepark",
     "date_iso": "2026-12-16",
     "first_seen": "2026-11-20"
+  },
+  "https://biorn.org/news-events/events/womens-health-challenge-workshop/": {
+    "title": "Women’s Health Challenge Workshop",
+    "source": "BioRN",
+    "date_iso": "2026-11-26",
+    "first_seen": "2026-11-21"
+  },
+  "https://biorn.org/news-events/events/bio-europe-spring-2027-21st-annual-international-partnering-conference/": {
+    "title": "BIO-Europe Spring 2027 – 21st Annual International Partnering Conference",
+    "source": "BioRN",
+    "date_iso": "2027-04-07",
+    "first_seen": "2026-11-21"
   }
 }
