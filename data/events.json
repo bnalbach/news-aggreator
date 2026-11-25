@@ -630,7 +630,7 @@
     "first_seen": "2026-11-12"
   },
   "https://www.uni-heidelberg.de/en/veranstaltungen/founders-meetup-coffee-catalysts-2026-11-25": {
-    "title": "Founders Meetup: Coffee & Catalysts hei_INNOVATION Startup Hub",
+    "title": "15:00 - 17:00 Uhr Founders Meetup: Coffee & Catalysts hei_INNOVATION Startup Hub",
     "source": "hei_INNOVATION",
     "date_iso": "2026-11-25",
     "first_seen": "2026-11-16"
@@ -652,5 +652,11 @@
     "source": "BioRN",
     "date_iso": "2027-04-07",
     "first_seen": "2026-11-21"
+  },
+  "https://www.helmholtz-h3.de/events/event/genesis-27-innovationlab/": {
+    "title": "GENESIS 27 | InnovationLab",
+    "source": "H3 Health Hub",
+    "date_iso": "2027-03-18",
+    "first_seen": "2026-11-25"
   }
 }
