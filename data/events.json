@@ -312,7 +312,7 @@
     "first_seen": "2026-09-05"
   },
   "https://www.helmholtz-h3.de/events/event/life-the-biomedical-convention-biorn-life-science-cluster-early-bird-deadline-september-30/": {
-    "title": "life - the biomedical convention | BioRN Life Science Cluster | Early bird deadline September 30",
+    "title": "life - the biomedical convention | BioRN Life Science Cluster",
     "source": "H3 Health Hub",
     "date_iso": "2027-02-03",
     "first_seen": "2026-09-05"
@@ -658,5 +658,29 @@
     "source": "H3 Health Hub",
     "date_iso": "2027-03-18",
     "first_seen": "2026-11-25"
+  },
+  "https://www.helmholtz-h3.de/events/event/founders-forum-deeptechhub/": {
+    "title": "Founders Forum | DeepTechHub",
+    "source": "H3 Health Hub",
+    "date_iso": "2026-11-27",
+    "first_seen": "2026-11-26"
+  },
+  "https://www.helmholtz-h3.de/events/event/bridge-stakeholder-forum-demystifying-regulatory-sandboxes-in-healthcare-bridge/": {
+    "title": "BRIDGE Stakeholder Forum: Demystifying Regulatory Sandboxes in Healthcare | BRIDGE",
+    "source": "H3 Health Hub",
+    "date_iso": "2026-12-03",
+    "first_seen": "2026-11-26"
+  },
+  "https://www.helmholtz-h3.de/events/event/42-brew-x-mas-edition-heidelberg-startup-partners-ev/": {
+    "title": "42 BREW X-Mas Edition | Heidelberg Startup Partners e.V.",
+    "source": "H3 Health Hub",
+    "date_iso": "2026-12-16",
+    "first_seen": "2026-11-26"
+  },
+  "https://www.helmholtz-h3.de/events/event/life-science-investors-day-biolabs-biorn-heidelberg-startup-partners-ev-and-others/": {
+    "title": "Life Science Investors' Day | BioLabs, BioRN, Heidelberg Startup Partners e.V., and others",
+    "source": "H3 Health Hub",
+    "date_iso": "2027-10-07",
+    "first_seen": "2026-11-26"
   }
 }
